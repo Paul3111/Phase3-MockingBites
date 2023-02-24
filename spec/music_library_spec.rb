@@ -2,8 +2,11 @@ RSpec.describe "Integration." do
   context "When at least one entry." do
     before do
       @library1 = MusicLibrary.new
-      @fake_track_1 = FakeTrack1.new
-      @fake_track_2 = FakeTrack2.new
+      @fake_track_1 = double :fake_track_1, add_track: "Song1 - Artist1"
+      # Kay used:
+        # track_1 = double :track
+        # expect(track_1).to receive(:matches?).with("two").and_return(true)
+      @fake_track_2 = double :fake_track_1, add_track: "Song2 - Artist1"
       @fake_track_3 = FakeTrack3.new
       @fake_track_4 = FakeTrack4.new
     end
@@ -26,6 +29,8 @@ RSpec.describe "Integration." do
       @library1.add(@fake_track_3.add_track)
       @library1.add(@fake_track_4.add_track)
       expect(@library1.search("Artist1")).to eq ["Song1 - Artist1", "Song2 - Artist1", "Song3 - Artist1"]
+      # Kay used:
+      # expect(music_library.search("two")).to eq [track_1]
     end
     
   end
@@ -47,17 +52,17 @@ RSpec.describe "Integration." do
   
 end
 
-class FakeTrack1
-  def add_track
-    return "Song1 - Artist1"
-  end
-end
+#class FakeTrack1
+#  def add_track
+#    return "Song1 - Artist1"
+#  end
+#end
 
-class FakeTrack2
-  def add_track
-    return "Song2 - Artist1"
-  end
-end
+#class FakeTrack2
+#  def add_track
+#    return "Song2 - Artist1"
+#  end
+#end
 
 class FakeTrack3
   def add_track
